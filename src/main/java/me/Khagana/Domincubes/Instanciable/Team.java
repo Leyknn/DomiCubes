@@ -1,4 +1,4 @@
-package me.Khagana.Domincubes;
+package me.Khagana.Domincubes.Instanciable;
 
 import org.bukkit.entity.Player;
 
