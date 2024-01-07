@@ -64,8 +64,8 @@ public abstract class ControlPoint {
         HashSet<Chunk> testedChunks = new HashSet<Chunk>(), overlappedChunks = new HashSet<Chunk>();
         LinkedList<Chunk> queue = new LinkedList<Chunk>();
         Chunk chunk;
-        //queue.add(centre.getChunk()); // commented for testing for testing
-        queue.add(centre.getWorld().getChunkAt(centre.getBlockX()/16, centre.getBlockZ()/16)); //for testing
+        queue.add(centre.getChunk()); // comment for tests
+        //queue.add(centre.getWorld().getChunkAt(centre.getBlockX()/16, centre.getBlockZ()/16)); //uncomment for tests
         while(!queue.isEmpty()){
             chunk=queue.removeFirst();
             if (this.isInChunk(chunk)){
