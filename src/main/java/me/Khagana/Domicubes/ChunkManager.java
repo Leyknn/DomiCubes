@@ -8,6 +8,10 @@ import java.util.Set;
 
 public class ChunkManager {
 
+    /**
+     * @param chunk
+     * @return return set of the 8 around chunk of the one in parameter
+     */
     public static Set<Chunk> getAroundChunk(Chunk chunk){
         HashSet<Chunk> aroundChunks = new HashSet<Chunk>();
         World world = chunk.getWorld();

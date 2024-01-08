@@ -25,6 +25,12 @@ public abstract class ControlPoint {
         return this.centre.getChunk();
     }
 
+    /**
+     * test if a chunk contains a part of the control point
+     * calculate squared distance between control point centre and closest side or corner of the chunk
+     * @param chunk : tested chunk
+     * @return true if the chunk contains a part of the control point
+     */
     public boolean isInChunk(Chunk chunk){
         int halfLength = 8;
         // half of a chunk's length
@@ -60,6 +66,10 @@ public abstract class ControlPoint {
         return squaredDist<=radius*radius;
     }
 
+    /**
+     * Search chunks that overlap the controlPoint
+     * @return Set of overlapped Chunk
+     */
     public Set<Chunk> getOverlappedChunk(){
         HashSet<Chunk> testedChunks = new HashSet<Chunk>(), overlappedChunks = new HashSet<Chunk>();
         LinkedList<Chunk> queue = new LinkedList<Chunk>();
