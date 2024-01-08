@@ -1,4 +1,4 @@
-package me.Khagana.Domincubes.Instanciable;
+package me.Khagana.Domicubes.Instanciable;
 
 public enum Color {
     BLUE,

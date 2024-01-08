@@ -1,6 +1,6 @@
 package me.Khagana.DomincubesTests;
 
-import me.Khagana.Domincubes.ControlPoint.ControlPoint;
+import me.Khagana.Domicubes.ControlPoint.ControlPoint;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -8,9 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.mockito.Mockito;
-
-import java.util.HashSet;
-import java.util.Set;
 
 class ControlPointTester extends ControlPoint{
 

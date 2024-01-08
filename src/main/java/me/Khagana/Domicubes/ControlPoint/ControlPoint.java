@@ -1,7 +1,7 @@
-package me.Khagana.Domincubes.ControlPoint;
+package me.Khagana.Domicubes.ControlPoint;
 
-import me.Khagana.Domincubes.ChunkManager;
-import me.Khagana.Domincubes.GameManager;
+import me.Khagana.Domicubes.ChunkManager;
+import me.Khagana.Domicubes.GameManager;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
@@ -26,8 +26,8 @@ public abstract class ControlPoint {
     }
 
     public boolean isInChunk(Chunk chunk){
-        int halfLenght = 8;
-        // half of a chunk's lenght
+        int halfLength = 8;
+        // half of a chunk's length
         int cx = chunk.getX()*16 + 8;
         int cz = chunk.getZ()*16 + 8;
         // cx, cz : coordinate of middle of the chunk
@@ -37,21 +37,21 @@ public abstract class ControlPoint {
         int dz = centre.getBlockZ() - cz;
 
         //on x-axis
-        t = dx + halfLenght;
+        t = dx + halfLength;
         if (t<0){
             squaredDist = t*t;
         } else {
-            t = dx - halfLenght;
+            t = dx - halfLength;
             if (t>0){
                 squaredDist = t*t;            }
         }
 
         //on y-axis
-        t = dz + halfLenght;
+        t = dz + halfLength;
         if (t<0){
             squaredDist += t*t;
         } else {
-            t = dz-halfLenght;
+            t = dz-halfLength;
             if (t>0){
                 squaredDist+=t*t;
             }

@@ -1,7 +1,7 @@
-package me.Khagana.Domincubes;
+package me.Khagana.Domicubes;
 
-import me.Khagana.Domincubes.ControlPoint.ControlPoint;
-import me.Khagana.Domincubes.Instanciable.DomincubesPlayer;
+import me.Khagana.Domicubes.ControlPoint.ControlPoint;
+import me.Khagana.Domicubes.Instanciable.DomicubesPlayer;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 
@@ -20,14 +20,14 @@ public class GameManager {
     }
 
     private static GameManager instance;
-    private Map<Player, DomincubesPlayer> PlayersMap;
+    private Map<Player, DomicubesPlayer> PlayersMap;
     private Map<Chunk, Set<ControlPoint>> ControlPointMap;
 
     private GameManager (){
-        this.PlayersMap=new HashMap<Player, DomincubesPlayer>();
+        this.PlayersMap=new HashMap<Player, DomicubesPlayer>();
     }
 
-    public Map<Player, DomincubesPlayer> getPlayersMap(){
+    public Map<Player, DomicubesPlayer> getPlayersMap(){
         return this.PlayersMap;
     }
 
