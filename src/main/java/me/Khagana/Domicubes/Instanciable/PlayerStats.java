@@ -3,6 +3,8 @@ package me.Khagana.Domicubes.Instanciable;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Getter @Setter
 public class PlayerStats {
     private DomicubesPlayer domicubesPlayer;
@@ -31,5 +33,13 @@ public class PlayerStats {
         this.movementSpeed = playerStats.getMovementSpeed();
         this.RegenPerSecond = playerStats.getRegenPerSecond();
         this.lifeSteal = playerStats.getLifeSteal();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlayerStats that = (PlayerStats) o;
+        return maxHP == that.maxHP && Double.compare(damageDealt, that.damageDealt) == 0 && Double.compare(damageTaken, that.damageTaken) == 0 && Double.compare(movementSpeed, that.movementSpeed) == 0 && Double.compare(RegenPerSecond, that.RegenPerSecond) == 0 && Double.compare(lifeSteal, that.lifeSteal) == 0 && Objects.equals(domicubesPlayer, that.domicubesPlayer);
     }
 }
