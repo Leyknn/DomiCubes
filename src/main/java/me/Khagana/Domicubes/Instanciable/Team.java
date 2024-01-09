@@ -1,9 +1,11 @@
 package me.Khagana.Domicubes.Instanciable;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 
 import java.util.Set;
-
+@Getter @Setter
 public class Team {
     private Color color;
     private String name;

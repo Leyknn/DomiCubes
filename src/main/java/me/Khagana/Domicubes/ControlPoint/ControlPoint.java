@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import java.util.Set;
 
 public abstract class ControlPoint {
-    private Location centre;
-    private int radius;
+    private final Location centre;
+    private final int radius;
 
     public ControlPoint(Location loc, int radius, boolean testing){
         this.radius = radius;
@@ -49,7 +49,8 @@ public abstract class ControlPoint {
         } else {
             t = dx - halfLength;
             if (t>0){
-                squaredDist = t*t;            }
+                squaredDist = t*t;
+            }
         }
 
         //on y-axis
@@ -67,12 +68,12 @@ public abstract class ControlPoint {
     }
 
     /**
-     * Search chunks that overlap the controlPoint
+     * Search chunks overlapping the controlPoint
      * @return Set of overlapped Chunk
      */
     public Set<Chunk> getOverlappedChunk(){
-        HashSet<Chunk> testedChunks = new HashSet<Chunk>(), overlappedChunks = new HashSet<Chunk>();
-        LinkedList<Chunk> queue = new LinkedList<Chunk>();
+        HashSet<Chunk> testedChunks = new HashSet<>(), overlappedChunks = new HashSet<>();
+        LinkedList<Chunk> queue = new LinkedList<>();
         Chunk chunk;
         queue.add(centre.getChunk()); // comment for tests
         //queue.add(centre.getWorld().getChunkAt(centre.getBlockX()/16, centre.getBlockZ()/16)); //uncomment for tests
