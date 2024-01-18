@@ -15,6 +15,7 @@ import java.util.List;
 public class DomicubesPlayer {
     private Player player;
     private PlayerStats basePlayerStats, playerStats;
+    private Team team;
 
     private List<DomicubesEffect> permanentEffect;
     private List<DomicubesEffect> temporaryEffect;

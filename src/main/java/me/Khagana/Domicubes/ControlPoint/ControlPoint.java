@@ -2,23 +2,43 @@ package me.Khagana.Domicubes.ControlPoint;
 
 import me.Khagana.Domicubes.ChunkManager;
 import me.Khagana.Domicubes.GameManager;
+import me.Khagana.Domicubes.Instanciable.Team;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public abstract class ControlPoint {
+public class ControlPoint {
     private Location centre;
     private int radius;
 
-    public ControlPoint(Location loc, int radius, boolean testing){
+    private Map<Team, Integer> teamPresence;
+
+    private Team controllingTeam;
+
+    private Team capturingTeam;
+
+    private int controlPercentage;
+
+    private int captureRate;
+
+    private int VPRate;
+
+    public ControlPoint(Location loc, int radius, boolean testing, int captureRate, int VPRate){
         this.radius = radius;
         this.centre = loc;
+        this.controllingTeam = null;
+        this.capturingTeam = null;
+        this.controlPercentage=0;
+        this.captureRate=captureRate;
+        this.VPRate = VPRate;
         if (!testing){
             GameManager.getInstance().addControlPoint(this, this.getOverlappedChunk());
         }
+        this.teamPresence = new HashMap<>();
+        // need to put team at the beginning of the game
     }
 
     public Chunk getChunk(){
@@ -89,5 +109,42 @@ public abstract class ControlPoint {
             }
         }
         return overlappedChunks;
+    }
+
+    public boolean isPresent(Player p){
+        return (square(this.centre.getBlockX() - p.getLocation().getBlockX()) + square(this.centre.getBlockZ() - p.getLocation().getBlockZ()) <= square(this.radius));
+    }
+
+    private int square(int a){
+        return a*a;
+    }
+
+    public void resetTeamPresence(){
+        this.teamPresence.replaceAll((key, value) -> value=0);
+    }
+
+    public void addTeamPresence(Team team){
+        this.teamPresence.put(team, this.teamPresence.get(team)+1);
+    }
+
+    public void doSmthg(){
+        int max = Collections.max(teamPresence.values());
+        int sum = teamPresence.values().stream().mapToInt(Integer::intValue).sum();
+        List<Team> teams = teamPresence.entrySet().stream().filter(entry -> entry.getValue() == max).map(Map.Entry::getKey).collect(Collectors.toList());
+        if (teams.size() == 1){
+            if (teams.get(0)==capturingTeam && capturingTeam!=controllingTeam){
+                controlPercentage+=captureRate*max/sum;
+                if (controlPercentage>100){
+                    controllingTeam=capturingTeam;
+                    controlPercentage=0;
+                }
+            } else if (teams.get(0)!= capturingTeam && teams.get(0)!=controllingTeam){
+                controlPercentage= captureRate * max / sum;
+                capturingTeam = teams.get(0);
+            }
+        }
+        if (controllingTeam!=null) {
+            controllingTeam.addVictoryPoint(VPRate);
+        }
     }
 }

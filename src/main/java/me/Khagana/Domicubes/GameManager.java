@@ -1,14 +1,13 @@
 package me.Khagana.Domicubes;
 
+import lombok.Getter;
+import lombok.Setter;
 import me.Khagana.Domicubes.ControlPoint.ControlPoint;
 import me.Khagana.Domicubes.Instanciable.DomicubesPlayer;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class GameManager {
 
@@ -20,27 +19,23 @@ public class GameManager {
     }
 
     private static GameManager instance;
-    private Map<Player, DomicubesPlayer> PlayersMap;
-    private Map<Chunk, Set<ControlPoint>> ControlPointMap;
+
+    @Getter private Map<Player, DomicubesPlayer> PlayersMap;
+    @Getter private Map<Chunk, Set<ControlPoint>> ChunkControlPointMap;
+
+    @Getter private Set<ControlPoint> ControlPointList;
+
 
     private GameManager (){
         this.PlayersMap=new HashMap<Player, DomicubesPlayer>();
     }
 
-    public Map<Player, DomicubesPlayer> getPlayersMap(){
-        return this.PlayersMap;
-    }
-
-    public Map<Chunk, Set<ControlPoint>> getControlPointMap(){
-        return this.ControlPointMap;
-    }
-
     public boolean addControlPoint(ControlPoint cp, Set<Chunk> overlappedChunk){
         for (Chunk c : overlappedChunk){
-            if (!ControlPointMap.containsKey(c)){
-                ControlPointMap.put(c, new HashSet<>());
+            if (!ChunkControlPointMap.containsKey(c)){
+                ChunkControlPointMap.put(c, new HashSet<>());
             }
-            ControlPointMap.get(c).add(cp);
+            ChunkControlPointMap.get(c).add(cp);
         }
         return true;
     }

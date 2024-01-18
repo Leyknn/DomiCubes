@@ -8,14 +8,16 @@ public class Team {
     private Color color;
     private String name;
     private Set<Player> players;
-    private int HP;
-    private int maxHP;
+    private int VP;
 
-    public Team(Color color, String name, int maxHP){
+    public Team(Color color, String name){
         this.color=color;
         this.name=name;
-        this.maxHP=maxHP;
-        this.HP=maxHP;
+        this.VP=0;
+    }
+
+    public void addVictoryPoint(int vp){
+        this.VP+=vp;
     }
 
 }
