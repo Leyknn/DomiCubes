@@ -2,6 +2,7 @@ package me.Khagana.Domicubes.Instanciable;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
@@ -14,6 +15,16 @@ public class PlayerStats {
     private double movementSpeed;
     private double RegenPerSecond;
     private double lifeSteal;
+
+    public PlayerStats(DomicubesPlayer domicubesPlayer){
+        this.domicubesPlayer=domicubesPlayer;
+        this.maxHP=20;
+        this.RegenPerSecond=0;
+        this.lifeSteal=0;
+        this.movementSpeed=0.2;
+        this.damageTaken=1;
+        this.damageDealt=1;
+    }
 
     public PlayerStats(DomicubesPlayer domicubesPlayer, int maxHP, double damageDealt, double damageTaken, double movementSpeed, double regenPerSecond, double lifeSteal){
         this.domicubesPlayer = domicubesPlayer;
