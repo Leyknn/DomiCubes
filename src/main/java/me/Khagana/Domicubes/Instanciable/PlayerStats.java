@@ -2,14 +2,13 @@ package me.Khagana.Domicubes.Instanciable;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
 @Getter @Setter
 public class PlayerStats {
     private DomicubesPlayer domicubesPlayer;
-    private int maxHP;
+    private double maxHP;
     private double damageDealt;
     private double damageTaken;
     private double movementSpeed;
