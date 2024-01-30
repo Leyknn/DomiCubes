@@ -1,24 +1,27 @@
 package me.Khagana.Domicubes;
 
 import me.Khagana.Domicubes.ControlPoint.ControlPoint;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.stream.Stream;
 
 public class ControlPointScript extends BukkitRunnable {
     @Override
     public void run() {
-        for (Player p : GameManager.getInstance().getPlayersMap().keySet()){
-            if (GameManager.getInstance().getChunkControlPointMap().containsKey(p.getLocation().getChunk())){
-                for (ControlPoint cp : GameManager.getInstance().getChunkControlPointMap().get(p.getLocation().getChunk())) {
-                    if(cp.isPresent(p)){
-                        cp.addTeamPresence(GameManager.getInstance().getPlayersMap().get(p).getTeam());
+        GameManager instance = GameManager.getInstance();
+        instance.getPlayersMap().keySet().parallelStream().forEach(Player -> {
+            if (instance.getChunkControlPointMap().containsKey(Player.getLocation().getChunk())){
+                Stream<ControlPoint> stream = instance.getChunkControlPointMap().get(Player.getLocation().getChunk()).stream();
+                stream.forEach(ControlPoint -> {
+                    if(ControlPoint.isPresent(Player)){
+                        ControlPoint.addTeamPresence(instance.getPlayersMap().get(Player).getTeam());
                     }
-                }
+                });
             }
-        }
-        for (ControlPoint cp : GameManager.getInstance().getControlPointList()){
-            cp.doSmthg();
-            cp.resetTeamPresence();
-        }
+        });
+        instance.getControlPointList().parallelStream().forEach(ControlPoint -> {
+            ControlPoint.updatePresence();
+            ControlPoint.resetTeamPresence();
+        });
     }
 }

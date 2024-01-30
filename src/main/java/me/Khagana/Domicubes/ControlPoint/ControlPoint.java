@@ -127,7 +127,7 @@ public class ControlPoint {
         this.teamPresence.put(team, this.teamPresence.get(team)+1);
     }
 
-    public void doSmthg(){
+    public void updatePresence(){
         int max = Collections.max(teamPresence.values());
         int sum = teamPresence.values().stream().mapToInt(Integer::intValue).sum();
         List<Team> teams = teamPresence.entrySet().stream().filter(entry -> entry.getValue() == max).map(Map.Entry::getKey).collect(Collectors.toList());

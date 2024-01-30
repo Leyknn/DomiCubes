@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 class ControlPointTester extends ControlPoint{
 
     public ControlPointTester(Location loc, int radius, boolean testing) {
-        super(loc, radius, testing);
+        super(loc, radius, testing, 0,0);
     }
 }
 public class ControlPointTests {
