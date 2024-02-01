@@ -1,10 +1,12 @@
 package me.Khagana.Domicubes;
 
 import lombok.Getter;
+import lombok.Setter;
 import me.Khagana.Domicubes.ControlPoint.ControlPoint;
 import me.Khagana.Domicubes.Instanciable.DomicubesPlayer;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 
@@ -24,9 +26,15 @@ public class GameManager {
 
     @Getter private Set<ControlPoint> ControlPointList;
 
+    @Getter @Setter
+    private Plugin plugin;
+
 
     private GameManager (){
         this.playersMap =new HashMap<Player, DomicubesPlayer>();
+        this.ControlPointList = new HashSet<>();
+        this.chunkControlPointMap = new HashMap<>();
+
     }
 
     public boolean addControlPoint(ControlPoint cp, Set<Chunk> overlappedChunk){
@@ -36,6 +44,7 @@ public class GameManager {
             }
             chunkControlPointMap.get(c).add(cp);
         }
+        ControlPointList.add(cp);
         return true;
     }
 }

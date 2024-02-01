@@ -1,11 +1,18 @@
 package me.Khagana.Domicubes.ControlPoint;
 
+import lombok.Getter;
+import lombok.Setter;
 import me.Khagana.Domicubes.ChunkManager;
 import me.Khagana.Domicubes.GameManager;
 import me.Khagana.Domicubes.Instanciable.Team;
+import me.Khagana.Domicubes.Main;
+import me.Khagana.Domicubes.ParticulesEffect.ParticleEffect;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -14,6 +21,7 @@ public class ControlPoint {
     private Location centre;
     private int radius;
 
+    @Getter
     private Map<Team, Integer> teamPresence;
 
     private Team controllingTeam;
@@ -29,8 +37,8 @@ public class ControlPoint {
     public ControlPoint(Location loc, int radius, boolean testing, int captureRate, int VPRate){
         this.radius = radius;
         this.centre = loc;
-        this.controllingTeam = null;
-        this.capturingTeam = null;
+        this.controllingTeam = Team.neutralTeam();
+        this.capturingTeam = Team.neutralTeam();
         this.controlPercentage=0;
         this.captureRate=captureRate;
         this.VPRate = VPRate;
@@ -38,6 +46,17 @@ public class ControlPoint {
             GameManager.getInstance().addControlPoint(this, this.getOverlappedChunk());
         }
         this.teamPresence = new HashMap<>();
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                for (int angle=0; angle<360; angle +=5) {
+                    double z = radius * Math.sin(angle * Math.PI / 180);
+                    double x = radius * Math.cos(angle * Math.PI / 180);
+
+                    ParticleEffect.REDSTONE.display(controllingTeam.getColor().getOrdinaryColor(), new Location(centre.getWorld(), centre.getBlockX() + x + 0.5, centre.getBlockY() + 0.25, centre.getBlockZ() + z + 0.5), 200);
+                }
+            }
+        }.runTaskTimerAsynchronously(GameManager.getInstance().getPlugin(), 0, 10);
         // need to put team at the beginning of the game
     }
 
@@ -134,7 +153,7 @@ public class ControlPoint {
         if (teams.size() == 1){
             if (teams.get(0)==capturingTeam && capturingTeam!=controllingTeam){
                 controlPercentage+=captureRate*max/sum;
-                if (controlPercentage>100){
+                if (controlPercentage>=100){
                     controllingTeam=capturingTeam;
                     controlPercentage=0;
                 }

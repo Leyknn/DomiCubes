@@ -42,4 +42,8 @@ public class PlayerStats {
         PlayerStats that = (PlayerStats) o;
         return maxHP == that.maxHP && Double.compare(damageDealt, that.damageDealt) == 0 && Double.compare(damageTaken, that.damageTaken) == 0 && Double.compare(movementSpeed, that.movementSpeed) == 0 && Double.compare(RegenPerSecond, that.RegenPerSecond) == 0 && Double.compare(lifeSteal, that.lifeSteal) == 0 && Objects.equals(domicubesPlayer, that.domicubesPlayer);
     }
+
+    public static PlayerStats basePlayerStats(){
+        return new PlayerStats(null, 20, 1, 1, 0.2, 0, 0);
+    }
 }

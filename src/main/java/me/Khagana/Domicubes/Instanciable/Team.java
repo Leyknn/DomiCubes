@@ -1,14 +1,15 @@
 package me.Khagana.Domicubes.Instanciable;
 
+import lombok.Getter;
 import org.bukkit.entity.Player;
 
 import java.util.Set;
 
 public class Team {
-    private Color color;
-    private String name;
+    @Getter private Color color;
+    @Getter private String name;
     private Set<Player> players;
-    private int VP;
+    @Getter private int VP;
 
     public Team(Color color, String name){
         this.color=color;
@@ -18,6 +19,10 @@ public class Team {
 
     public void addVictoryPoint(int vp){
         this.VP+=vp;
+    }
+
+    public static Team neutralTeam(){
+        return new Team(Color.NEUTRAL, "");
     }
 
 }
