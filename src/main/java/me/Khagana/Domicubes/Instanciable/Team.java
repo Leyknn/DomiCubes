@@ -21,8 +21,4 @@ public class Team {
         this.VP+=vp;
     }
 
-    public static Team neutralTeam(){
-        return new Team(Color.NEUTRAL, "");
-    }
-
 }

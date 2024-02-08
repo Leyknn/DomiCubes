@@ -37,7 +37,7 @@ public class GameManager {
 
     }
 
-    public boolean addControlPoint(ControlPoint cp, Set<Chunk> overlappedChunk){
+    public void addControlPoint(ControlPoint cp, Set<Chunk> overlappedChunk){
         for (Chunk c : overlappedChunk){
             if (!chunkControlPointMap.containsKey(c)){
                 chunkControlPointMap.put(c, new HashSet<>());
@@ -45,6 +45,5 @@ public class GameManager {
             chunkControlPointMap.get(c).add(cp);
         }
         ControlPointList.add(cp);
-        return true;
     }
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.Khagana.Domicubes.ChunkManager;
 import me.Khagana.Domicubes.GameManager;
+import me.Khagana.Domicubes.Instanciable.NeutralTeam;
 import me.Khagana.Domicubes.Instanciable.Team;
 import me.Khagana.Domicubes.Main;
 import me.Khagana.Domicubes.ParticulesEffect.ParticleEffect;
@@ -37,8 +38,8 @@ public class ControlPoint {
     public ControlPoint(Location loc, int radius, boolean testing, int captureRate, int VPRate){
         this.radius = radius;
         this.centre = loc;
-        this.controllingTeam = Team.neutralTeam();
-        this.capturingTeam = Team.neutralTeam();
+        this.controllingTeam = NeutralTeam.getInstance();
+        this.capturingTeam = NeutralTeam.getInstance();
         this.controlPercentage=0;
         this.captureRate=captureRate;
         this.VPRate = VPRate;
@@ -149,21 +150,28 @@ public class ControlPoint {
     public void updatePresence(){
         int max = Collections.max(teamPresence.values());
         int sum = teamPresence.values().stream().mapToInt(Integer::intValue).sum();
-        List<Team> teams = teamPresence.entrySet().stream().filter(entry -> entry.getValue() == max).map(Map.Entry::getKey).collect(Collectors.toList());
-        if (teams.size() == 1){
-            if (teams.get(0)==capturingTeam && capturingTeam!=controllingTeam){
-                controlPercentage+=captureRate*max/sum;
-                if (controlPercentage>=100){
-                    controllingTeam=capturingTeam;
-                    controlPercentage=0;
+        if (!(max == 0)) {
+            List<Team> teams = teamPresence.entrySet().stream().filter(entry -> entry.getValue() == max).map(Map.Entry::getKey).collect(Collectors.toList());
+            Team team0=teams.get(0);
+            if (teams.size() == 1) {
+                if (team0 != controllingTeam) {
+                    if (team0 == capturingTeam) {
+                        controlPercentage += captureRate * max / sum;
+                        if (controlPercentage >= 100) {
+                            controllingTeam = capturingTeam;
+                            controlPercentage = 0;
+                        }
+                    } else {
+                        controlPercentage = captureRate * max / sum;
+                        capturingTeam = teams.get(0);
+                    }
+                } else if (controlPercentage!= 0){
+                    controlPercentage = 0;
                 }
-            } else if (teams.get(0)!= capturingTeam && teams.get(0)!=controllingTeam){
-                controlPercentage= captureRate * max / sum;
-                capturingTeam = teams.get(0);
             }
+        } else if (controlPercentage!= 0){
+            controlPercentage = 0;
         }
-        if (controllingTeam!=null) {
-            controllingTeam.addVictoryPoint(VPRate);
-        }
+        controllingTeam.addVictoryPoint(VPRate);
     }
 }
