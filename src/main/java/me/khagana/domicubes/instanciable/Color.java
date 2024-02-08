@@ -1,7 +1,7 @@
-package me.Khagana.Domicubes.Instanciable;
+package me.khagana.domicubes.instanciable;
 
 import lombok.Getter;
-import me.Khagana.Domicubes.ParticulesEffect.ParticleEffect;
+import me.khagana.domicubes.particuleseffect.ParticleEffect;
 
 public enum Color {
     BLUE(0,0,255),

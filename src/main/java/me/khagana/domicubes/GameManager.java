@@ -1,9 +1,9 @@
-package me.Khagana.Domicubes;
+package me.khagana.domicubes;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.Khagana.Domicubes.ControlPoint.ControlPoint;
-import me.Khagana.Domicubes.Instanciable.DomicubesPlayer;
+import me.khagana.domicubes.controlpoint.ControlPoint;
+import me.khagana.domicubes.instanciable.DomicubesPlayer;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;

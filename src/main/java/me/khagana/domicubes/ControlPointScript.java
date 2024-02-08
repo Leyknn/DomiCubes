@@ -1,6 +1,6 @@
-package me.Khagana.Domicubes;
+package me.khagana.domicubes;
 
-import me.Khagana.Domicubes.ControlPoint.ControlPoint;
+import me.khagana.domicubes.controlpoint.ControlPoint;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.stream.Stream;

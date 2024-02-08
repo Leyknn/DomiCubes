@@ -1,6 +1,4 @@
-package me.Khagana.Domicubes.ParticulesEffect;
-
-import me.Khagana.Domicubes.ParticulesEffect.ReflectionUtils;
+package me.khagana.domicubes.particuleseffect;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;

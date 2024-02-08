@@ -1,4 +1,4 @@
-package me.Khagana.Domicubes.ParticulesEffect;
+package me.khagana.domicubes.particuleseffect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

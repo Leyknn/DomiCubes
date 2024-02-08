@@ -1,4 +1,4 @@
-package me.Khagana.Domicubes;
+package me.khagana.domicubes;
 
 import org.bukkit.Chunk;
 import org.bukkit.World;

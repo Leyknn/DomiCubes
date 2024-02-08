@@ -1,6 +1,6 @@
 package me.Khagana.DomincubesTests;
 
-import me.Khagana.Domicubes.ControlPoint.ControlPoint;
+import me.khagana.domicubes.controlpoint.ControlPoint;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;

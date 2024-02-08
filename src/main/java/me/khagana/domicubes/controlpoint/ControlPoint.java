@@ -1,16 +1,12 @@
-package me.Khagana.Domicubes.ControlPoint;
+package me.khagana.domicubes.controlpoint;
 
 import lombok.Getter;
-import lombok.Setter;
-import me.Khagana.Domicubes.ChunkManager;
-import me.Khagana.Domicubes.GameManager;
-import me.Khagana.Domicubes.Instanciable.NeutralTeam;
-import me.Khagana.Domicubes.Instanciable.Team;
-import me.Khagana.Domicubes.Main;
-import me.Khagana.Domicubes.ParticulesEffect.ParticleEffect;
-import org.bukkit.Bukkit;
+import me.khagana.domicubes.ChunkManager;
+import me.khagana.domicubes.GameManager;
+import me.khagana.domicubes.instanciable.NeutralTeam;
+import me.khagana.domicubes.instanciable.Team;
+import me.khagana.domicubes.particuleseffect.ParticleEffect;
 import org.bukkit.Chunk;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

@@ -1,4 +1,4 @@
-package me.Khagana.Domicubes.Instanciable;
+package me.khagana.domicubes.instanciable;
 
 public class NeutralTeam extends Team{
 

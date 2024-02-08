@@ -1,10 +1,10 @@
-package me.Khagana.Domicubes;
+package me.khagana.domicubes;
 
-import me.Khagana.Domicubes.ControlPoint.ControlPoint;
-import me.Khagana.Domicubes.Instanciable.Color;
-import me.Khagana.Domicubes.Instanciable.DomicubesPlayer;
-import me.Khagana.Domicubes.Instanciable.PlayerStats;
-import me.Khagana.Domicubes.Instanciable.Team;
+import me.khagana.domicubes.controlpoint.ControlPoint;
+import me.khagana.domicubes.instanciable.Color;
+import me.khagana.domicubes.instanciable.DomicubesPlayer;
+import me.khagana.domicubes.instanciable.PlayerStats;
+import me.khagana.domicubes.instanciable.Team;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,4 +1,4 @@
-package me.Khagana.Domicubes.Effect;
+package me.khagana.domicubes.effect;
 
 public interface Temporary{
     int time = -1;

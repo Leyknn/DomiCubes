@@ -1,4 +1,4 @@
-package me.Khagana.Domicubes.Effect;
+package me.khagana.domicubes.effect;
 
 public class ImpossibleEffectException extends Exception{
     public ImpossibleEffectException(String s){
