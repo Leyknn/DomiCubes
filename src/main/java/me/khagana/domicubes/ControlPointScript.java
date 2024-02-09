@@ -1,6 +1,7 @@
 package me.khagana.domicubes;
 
 import me.khagana.domicubes.controlpoint.ControlPoint;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.stream.Stream;
@@ -23,5 +24,8 @@ public class ControlPointScript extends BukkitRunnable {
             ControlPoint.updatePresence();
             ControlPoint.resetTeamPresence();
         });
+        for (Player player : GameManager.getInstance().getPlayersMap().keySet()){
+            DomicubesScoreboard.createScoreboard(player);
+        }
     }
 }
