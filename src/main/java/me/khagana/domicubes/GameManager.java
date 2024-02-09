@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.khagana.domicubes.controlpoint.ControlPoint;
 import me.khagana.domicubes.instanciable.DomicubesPlayer;
+import me.khagana.domicubes.instanciable.Team;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -24,7 +25,8 @@ public class GameManager {
     @Getter private Map<Player, DomicubesPlayer> playersMap;
     @Getter private Map<Chunk, Set<ControlPoint>> chunkControlPointMap;
 
-    @Getter private Set<ControlPoint> ControlPointList;
+    @Getter private Set<ControlPoint> controlPointList;
+    @Getter private Set<Team> teamSet;
 
     @Getter @Setter
     private Plugin plugin;
@@ -32,9 +34,9 @@ public class GameManager {
 
     private GameManager (){
         this.playersMap =new HashMap<Player, DomicubesPlayer>();
-        this.ControlPointList = new HashSet<>();
+        this.controlPointList = new HashSet<>();
         this.chunkControlPointMap = new HashMap<>();
-
+        this.teamSet = new HashSet<>();
     }
 
     public void addControlPoint(ControlPoint cp, Set<Chunk> overlappedChunk){
@@ -44,6 +46,6 @@ public class GameManager {
             }
             chunkControlPointMap.get(c).add(cp);
         }
-        ControlPointList.add(cp);
+        controlPointList.add(cp);
     }
 }

@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.6</version>
+            <version>1.18.28</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -74,7 +74,7 @@
                     <relocations>
                         <relocation>
                             <pattern>de.tr7zw.changeme.nbtapi</pattern>
-                            <shadedPattern>me.Khagana.Domicubes</shadedPattern>
+                            <shadedPattern>me.Khagana.domicubes</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

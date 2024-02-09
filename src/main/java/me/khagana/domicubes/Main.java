@@ -17,6 +17,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         GameManager.getInstance().setPlugin(this);
         Team t = new Team(Color.BLUE, "t1");
+        GameManager.getInstance().getTeamSet().add(t);
         for (Player p : Bukkit.getOnlinePlayers()){
             DomicubesPlayer dp = new DomicubesPlayer(p, PlayerStats.basePlayerStats());
             dp.setTeam(t);
@@ -35,6 +36,14 @@ public class Main extends JavaPlugin {
             @Override
             public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
                 sender.sendMessage("" + GameManager.getInstance().getPlayersMap().get((Player) sender).getTeam().getVP());
+                return true;
+            }
+        });
+
+        this.getCommand("sb").setExecutor(new CommandExecutor() {
+            @Override
+            public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+                DomicubesScoreboard.createScoreboard((Player) sender);
                 return true;
             }
         });
