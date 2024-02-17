@@ -1,8 +1,5 @@
-main: me.Khagana.Domicubes.Main
+main: me.khagana.domicubes.Main
 name: Domicubes
 author: Khagana
 version: 1.0.0
 
-commands:
-  cp:
-  vp:
