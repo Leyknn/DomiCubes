@@ -1,3 +1,3 @@
-package me.Khagana.domicubes.effect;
+package me.khagana.domicubes.effect;
 
 public interface Temporary{}

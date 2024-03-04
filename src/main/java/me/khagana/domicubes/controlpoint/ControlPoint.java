@@ -1,7 +1,7 @@
-package me.Khagana.domicubes.controlpoint;
+package me.khagana.domicubes.controlpoint;
 
-import me.Khagana.domicubes.ChunkManager;
-import me.Khagana.domicubes.GameManager;
+import me.khagana.domicubes.ChunkManager;
+import me.khagana.domicubes.GameManager;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 

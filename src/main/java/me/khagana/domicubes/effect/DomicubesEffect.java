@@ -1,6 +1,6 @@
-package me.Khagana.domicubes.effect;
+package me.khagana.domicubes.effect;
 
-import me.Khagana.domicubes.instanciable.DomicubesPlayer;
+import me.khagana.domicubes.instanciable.DomicubesPlayer;
 
 public abstract class DomicubesEffect {
     private DomicubesPlayer affectedPlayer;

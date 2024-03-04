@@ -1,4 +1,4 @@
-package me.Khagana.domicubes;
+package me.khagana.domicubes;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

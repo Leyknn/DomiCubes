@@ -1,4 +1,4 @@
-package me.Khagana.domicubes.instanciable;
+package me.khagana.domicubes.instanciable;
 
 import lombok.Getter;
 import lombok.Setter;

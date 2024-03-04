@@ -1,11 +1,11 @@
-package me.Khagana.domicubes.instanciable;
+package me.khagana.domicubes.instanciable;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.Khagana.domicubes.effect.DomicubesEffect;
-import me.Khagana.domicubes.effect.ImpossibleEffectException;
-import me.Khagana.domicubes.effect.Permanent;
-import me.Khagana.domicubes.effect.Temporary;
+import me.khagana.domicubes.effect.DomicubesEffect;
+import me.khagana.domicubes.effect.ImpossibleEffectException;
+import me.khagana.domicubes.effect.Permanent;
+import me.khagana.domicubes.effect.Temporary;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

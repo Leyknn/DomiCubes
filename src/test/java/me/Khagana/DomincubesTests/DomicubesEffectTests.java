@@ -1,9 +1,9 @@
 package me.Khagana.DomincubesTests;
 
-import me.Khagana.domicubes.effect.DomicubesEffect;
-import me.Khagana.domicubes.effect.Temporary;
-import me.Khagana.domicubes.instanciable.DomicubesPlayer;
-import me.Khagana.domicubes.instanciable.PlayerStats;
+import me.khagana.domicubes.effect.DomicubesEffect;
+import me.khagana.domicubes.effect.Temporary;
+import me.khagana.domicubes.instanciable.DomicubesPlayer;
+import me.khagana.domicubes.instanciable.PlayerStats;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

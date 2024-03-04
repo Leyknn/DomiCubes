@@ -1,4 +1,4 @@
-package me.Khagana.domicubes.instanciable;
+package me.khagana.domicubes.instanciable;
 
 public enum Color {
     BLUE,
