@@ -16,7 +16,12 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
+@Getter
 public class GameManager {
 
     public static GameManager getInstance() {
@@ -28,13 +33,13 @@ public class GameManager {
 
     private static GameManager instance;
 
-    @Getter private Map<Player, DomicubesPlayer> playersMap;
-    @Getter private Map<Chunk, Set<ControlPoint>> chunkControlPointMap;
-    @Getter private Set<ControlPoint> controlPointList;
-    @Getter private List<Team> teamList;
-    @Getter @Setter private Plugin plugin;
-    @Getter private Status status;
-    @Getter private GameConfig config;
+    private Map<Player, DomicubesPlayer> playersMap;
+    private Map<Chunk, Set<ControlPoint>> chunkControlPointMap;
+    private Set<ControlPoint> controlPointList;
+    private List<Team> teamList;
+    @Setter private Plugin plugin;
+    private Status status;
+    private GameConfig config;
 
 
     private GameManager (){
@@ -56,7 +61,7 @@ public class GameManager {
         controlPointList.add(cp);
     }
 
-    public boolean startGame(CommandSender sender ){
+    public boolean startGame(CommandSender sender){
         if (status==Status.lobby) {
             if (validTeam(sender)) {
                 createTeam(sender);

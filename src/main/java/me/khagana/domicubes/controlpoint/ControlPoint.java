@@ -32,15 +32,13 @@ public class ControlPoint {
 
     @Setter private static int VPPerSecond;
 
-    public ControlPoint(Location loc, int radius, boolean testing, int captureRate, int VPRate){
+    public ControlPoint(Location loc, int radius){
         this.radius = radius;
         this.centre = loc;
         this.controllingTeam = NeutralTeam.getInstance();
         this.capturingTeam = NeutralTeam.getInstance();
         this.controlPercentage=0;
-        if (!testing){
-            GameManager.getInstance().addControlPoint(this, this.getOverlappedChunk());
-        }
+        GameManager.getInstance().addControlPoint(this, this.getOverlappedChunk());
         this.teamPresence = new HashMap<>();
         new BukkitRunnable(){
             @Override
@@ -83,7 +81,8 @@ public class ControlPoint {
         } else {
             t = dx - halfLength;
             if (t>0){
-                squaredDist = t*t;            }
+                squaredDist = t*t;
+            }
         }
 
         //on y-axis
@@ -101,12 +100,13 @@ public class ControlPoint {
     }
 
     /**
-     * Search chunks that overlap the controlPoint
+
+     * Search chunks overlapping the controlPoint
      * @return Set of overlapped Chunk
      */
     public Set<Chunk> getOverlappedChunk(){
-        HashSet<Chunk> testedChunks = new HashSet<Chunk>(), overlappedChunks = new HashSet<Chunk>();
-        LinkedList<Chunk> queue = new LinkedList<Chunk>();
+        HashSet<Chunk> testedChunks = new HashSet<>(), overlappedChunks = new HashSet<>();
+        LinkedList<Chunk> queue = new LinkedList<>();
         Chunk chunk;
         queue.add(centre.getChunk()); // comment for tests
         //queue.add(centre.getWorld().getChunkAt(centre.getBlockX()/16, centre.getBlockZ()/16)); //uncomment for tests

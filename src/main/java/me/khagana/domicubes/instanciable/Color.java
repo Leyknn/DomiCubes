@@ -60,6 +60,4 @@ public enum Color {
                 return ChatColor.GRAY;
         }
     }
-
-
 }

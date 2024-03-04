@@ -27,7 +27,7 @@ public class Main extends JavaPlugin {
         this.getCommand("cp").setExecutor(new CommandExecutor() {
             @Override
             public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-                ControlPoint cp = new ControlPoint(((Player) sender).getLocation(), 5, false, 20, 5);
+                ControlPoint cp = new ControlPoint(((Player) sender).getLocation(), 5);
                 cp.getTeamPresence().put(t, 0);
                 sender.sendMessage("control point created");
                 return true;

@@ -41,5 +41,4 @@ public class Team {
     public void addVictoryPoint(int vp){
         this.VP+=vp;
     }
-
 }
