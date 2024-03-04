@@ -1,6 +1,7 @@
 package me.khagana.domicubes.controlpoint;
 
 import lombok.Getter;
+import lombok.Setter;
 import me.khagana.domicubes.ChunkManager;
 import me.khagana.domicubes.GameManager;
 import me.khagana.domicubes.instanciable.NeutralTeam;
@@ -27,9 +28,9 @@ public class ControlPoint {
 
     private int controlPercentage;
 
-    private int captureRate;
+    @Setter private static int  captureRate;
 
-    private int VPRate;
+    @Setter private static int VPPerSecond;
 
     public ControlPoint(Location loc, int radius, boolean testing, int captureRate, int VPRate){
         this.radius = radius;
@@ -37,8 +38,6 @@ public class ControlPoint {
         this.controllingTeam = NeutralTeam.getInstance();
         this.capturingTeam = NeutralTeam.getInstance();
         this.controlPercentage=0;
-        this.captureRate=captureRate;
-        this.VPRate = VPRate;
         if (!testing){
             GameManager.getInstance().addControlPoint(this, this.getOverlappedChunk());
         }
@@ -54,7 +53,6 @@ public class ControlPoint {
                 }
             }
         }.runTaskTimerAsynchronously(GameManager.getInstance().getPlugin(), 0, 10);
-        // need to put team at the beginning of the game
     }
 
     public Chunk getChunk(){
@@ -168,6 +166,6 @@ public class ControlPoint {
         } else if (controlPercentage!= 0){
             controlPercentage = 0;
         }
-        controllingTeam.addVictoryPoint(VPRate);
+        controllingTeam.addVictoryPoint(VPPerSecond);
     }
 }

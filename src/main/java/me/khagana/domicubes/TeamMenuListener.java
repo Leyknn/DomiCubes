@@ -1,7 +1,9 @@
 package me.khagana.domicubes;
 
-import fr.dwightstudio.dsmapi.MenuView;
-import me.khagana.domicubes.menu.TeamMenu;
+import me.khagana.domicubes.instanciable.Color;
+import me.khagana.domicubes.menu.DisplayTeamMenu;
+import me.khagana.domicubes.menu.LobbyMenu;
+import me.khagana.domicubes.menu.TempTeam;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,8 +15,12 @@ public class TeamMenuListener implements Listener {
     @EventHandler
     public void TeamMenuEvent(PlayerInteractEvent e){
         if (e.getItem().getType() == Material.CHEST){
+            if (DisplayTeamMenu.getTeams().isEmpty()){
+                DisplayTeamMenu.getTeams().add(new TempTeam(e.getPlayer().getLocation(), "T1", Color.BLUE));
+                DisplayTeamMenu.getTeams().add(new TempTeam(e.getPlayer().getLocation().add(10, 5, 10), "T2", Color.RED));
+            }
             if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                MenuView view = new TeamMenu().open(e.getPlayer(), 0);
+                new LobbyMenu().open(e.getPlayer(), 0);
             }
         }
     }

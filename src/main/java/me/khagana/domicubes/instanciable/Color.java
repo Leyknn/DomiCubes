@@ -6,11 +6,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 
 public enum Color {
-    BLUE(0,0,255, DyeColor.BLUE),
-    RED(255,0,0, DyeColor.RED),
-    YELLOW(255, 255, 0, DyeColor.YELLOW),
-    GREEN(0, 128, 0, DyeColor.GREEN),
-    NEUTRAL(64,64,64, DyeColor.GRAY);
+    BLUE(0,0,255, DyeColor.BLUE, ChatColor.BLUE),
+    RED(255,0,0, DyeColor.RED, ChatColor.RED),
+    YELLOW(255, 255, 0, DyeColor.YELLOW, ChatColor.YELLOW),
+    GREEN(0, 128, 0, DyeColor.GREEN, ChatColor.GREEN),
+    NEUTRAL(64,64,64, DyeColor.GRAY, ChatColor.GRAY);
 
     private final int red;
     private final int green;
@@ -18,14 +18,18 @@ public enum Color {
 
     @Getter private final DyeColor dyeColor;
 
+    @Getter private final ChatColor chatColor;
+
     @Getter private final ParticleEffect.OrdinaryColor ordinaryColor;
 
-    Color(int red, int green, int blue, DyeColor dyeColor){
+
+    Color(int red, int green, int blue, DyeColor dyeColor, ChatColor chatColor){
         this.red=red;
         this.green=green;
         this.blue=blue;
         this.ordinaryColor = new ParticleEffect.OrdinaryColor(red, green, blue);
         this.dyeColor=dyeColor;
+        this.chatColor=chatColor;
     }
 
     public static Color getColorByDyeColor(DyeColor dyeColor){

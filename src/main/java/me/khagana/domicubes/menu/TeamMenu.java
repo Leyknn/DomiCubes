@@ -1,109 +1,102 @@
 package me.khagana.domicubes.menu;
 
-import fr.dwightstudio.dsmapi.Menu;
 import fr.dwightstudio.dsmapi.MenuView;
 import fr.dwightstudio.dsmapi.SimpleMenu;
 import fr.dwightstudio.dsmapi.pages.PageType;
-import lombok.Getter;
+import me.khagana.domicubes.HeadManger;
 import me.khagana.domicubes.ItemBuilder;
+import me.khagana.domicubes.instanciable.Team;
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BannerMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TeamMenu extends SimpleMenu {
+    private TempTeam team;
 
-    @Getter private static List<ItemStack> teams;
-    private static ItemStack newTeamBanner;
-
-    private final static int OFFSET = 10;
-
-    public TeamMenu(){
+    public TeamMenu(TempTeam team){
         super();
-        if (teams == null){
-            teams = new ArrayList<>();
-        }
-        if (newTeamBanner == null){
-            newTeamBanner = new ItemStack(Material.BANNER);
-            BannerMeta meta = (BannerMeta) newTeamBanner.getItemMeta();
-            meta.setBaseColor(DyeColor.WHITE);
-            meta.setDisplayName(ChatColor.AQUA + "new team");
-            newTeamBanner.setItemMeta(meta);
-        }
-        // for testing purpose
-        if (teams.isEmpty()) {
-            ItemStack testBanner = new ItemStack(Material.BANNER);
-            BannerMeta meta = (BannerMeta) testBanner.getItemMeta();
-            meta.setBaseColor(DyeColor.BLUE);
-            meta.setDisplayName(ChatColor.BLUE + "T1");
-            testBanner.setItemMeta(meta);
-            teams.add(testBanner);
-            ItemStack testBanner2 = new ItemStack(Material.BANNER);
-            BannerMeta meta2 = (BannerMeta) testBanner2.getItemMeta();
-            meta2.setBaseColor(DyeColor.RED);
-            meta2.setDisplayName(ChatColor.RED + "T2");
-            testBanner2.setItemMeta(meta2);
-            teams.add(testBanner2);
-        }
+        this.team = team;
     }
+
+    private static final ItemStack deleteTeam = new ItemBuilder(Material.LAVA_BUCKET, ChatColor.RED + "Delete Team").build();
+    private static final ItemStack back = new ItemBuilder(Material.ARROW, ChatColor.BOLD + "" + ChatColor.WHITE + "Back").build();
+    private static final ItemStack join = new ItemBuilder(Material.BED, ChatColor.BOLD + "" + ChatColor.WHITE + "Join Team").build();
+
+    private static final int COMPASS_OFFSET = 0;
+    private static final int BANNER_OFFSET = 2;
+    private static final int JOIN_OFFSET = 4;
+    private static final int BACK_OFFSET = 6;
+    private static final int DELETE_OFFSET = 8;
 
     @Override
     public String getName() {
-        return "Choose a team";
+        return "Team : " + team.getName();
     }
 
     @Override
     public ItemStack[] getContent() {
         ItemStack[][] content = getPageType().getBlank2DArray();
+        content[0][COMPASS_OFFSET] = team.getCompass();
+        content[0][BANNER_OFFSET] = team.getBanner();
+        content[0][JOIN_OFFSET] = join;
+        content[0][BACK_OFFSET] = back;
+        content[0][DELETE_OFFSET] = deleteTeam;
+
         int i = 1;
-        for (ItemStack banner : teams){
-            content[1][i++] = banner;
+        int j = 2;
+        for (Player p : team.getPlayers()){
+            if (i%9 == 8){
+                i=1;
+                j+=1;
+            }
+            content[j][i++] = HeadManger.getHeadMap().get(p);
         }
-        content[1][i] = newTeamBanner;
+
         return getPageType().flatten(content);
     }
 
     @Override
     public PageType getPageType() {
-        return PageType.CHEST;
+        int playerNb = team.getPlayers().size();
+        if (playerNb <8){
+            return PageType.CHEST_PLUS;
+        } else if (playerNb < 15) {
+            return PageType.CHEST_PLUS_PLUS;
+        } else {
+            return PageType.DOUBLE_CHEST;
+        }
     }
 
     @Override
-    public void onClick(MenuView menuView, ClickType clickType, int i, ItemStack itemStack) {
-        if (itemStack.getItemMeta().getDisplayName().equals(newTeamBanner.getItemMeta().getDisplayName()) && ((BannerMeta) itemStack.getItemMeta()).getBaseColor()==DyeColor.WHITE) {
-            MenuView view = new NewTeamMenu().open(menuView.getPlayer(), 0);
-        } else {
-            addPlayer(i-OFFSET, menuView.getPlayer());
-            menuView.close();
-        }
-    }
-
-    private void addPlayer(int i, Player player){
-        for (ItemStack itemStack : teams) {
-            ItemMeta meta =  itemStack.getItemMeta();
-            if (meta.hasLore()) {
-                List<String> lore = meta.getLore();
-                lore.removeIf(x -> x.equals(player.getDisplayName()));
-                meta.setLore(lore);
-                itemStack.setItemMeta(meta);
+    public void onClick(MenuView view, ClickType clickType, int slot, ItemStack itemStack) {
+        if (itemStack.getType() != Material.AIR) {
+            switch (slot) {
+                case COMPASS_OFFSET:
+                    view.close();
+                    view.getPlayer().teleport(team.getLoc());
+                    break;
+                case JOIN_OFFSET:
+                    if (team.getPlayers().size() < Team.getMAX_PLAYER()) {
+                        if (!team.getPlayers().contains(view.getPlayer())) {
+                            for (TempTeam tempTeam : DisplayTeamMenu.getTeams()) {
+                                tempTeam.getPlayers().remove(view.getPlayer());
+                            }
+                            team.getPlayers().add(view.getPlayer());
+                        }
+                    } else {
+                        view.getPlayer().sendMessage(ChatColor.RED + "This team is already full");
+                    }
+                    this.open(view.getPlayer(), 0);
+                    break;
+                case BACK_OFFSET:
+                    new DisplayTeamMenu().open(view.getPlayer(), 0);
+                    break;
+                case DELETE_OFFSET:
+                    new DeleteTeamMenu(team).open(view.getPlayer(), 0);
+                    break;
             }
-        }
-        ItemStack itemStack = teams.get(i);
-        if (itemStack.getItemMeta().hasLore()) {
-            itemStack.getItemMeta().getLore().add(player.getDisplayName());
-        } else {
-            ArrayList<String> lore = new ArrayList<>();
-            lore.add(player.getDisplayName());
-            ItemMeta meta = itemStack.getItemMeta();
-            meta.setLore(lore);
-            itemStack.setItemMeta(meta);
         }
     }
 }
