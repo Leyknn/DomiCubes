@@ -22,7 +22,7 @@ public class ControlPoint {
     @Getter
     private Map<Team, Integer> teamPresence;
 
-    private Team controllingTeam;
+    @Getter private Team controllingTeam;
 
     private Team capturingTeam;
 
