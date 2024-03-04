@@ -1,3 +1,3 @@
-package me.Khagana.domicubes.Effect;
+package me.Khagana.domicubes.effect;
 
 public interface Permanent {}

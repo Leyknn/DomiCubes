@@ -1,4 +1,4 @@
-package me.Khagana.domicubes.ControlPoint;
+package me.Khagana.domicubes.controlpoint;
 
 import me.Khagana.domicubes.ChunkManager;
 import me.Khagana.domicubes.GameManager;

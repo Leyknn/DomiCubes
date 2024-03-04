@@ -1,7 +1,7 @@
 package me.Khagana.domicubes;
 
-import me.Khagana.domicubes.ControlPoint.ControlPoint;
-import me.Khagana.domicubes.Instanciable.DomicubesPlayer;
+import me.Khagana.domicubes.controlpoint.ControlPoint;
+import me.Khagana.domicubes.instanciable.DomicubesPlayer;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 
