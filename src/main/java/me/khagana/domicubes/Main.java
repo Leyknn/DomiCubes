@@ -16,7 +16,10 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getServer().getPluginManager().registerEvents(new TeamMenuListener(), this);
+        this.getServer().getPluginManager().registerEvents(new NewTeamListener(), this);
+        this.getServer().getPluginManager().registerEvents(new HeadManger(), this);
         GameManager.getInstance().setPlugin(this);
+
     }
 
     @Override
