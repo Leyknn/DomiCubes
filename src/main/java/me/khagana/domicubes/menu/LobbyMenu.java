@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 public class LobbyMenu extends SimpleMenu {
-
+    private static final ItemStack teams = new ItemBuilder(Material.BANNER, "Teams").build();
     private static final ItemStack config = new ItemBuilder(Material.PAPER, "Change config").build();
     private static final ItemStack start = new ItemBuilder(Material.BEACON, "Start the game").build();
     private static final int OFFSET = 9;
@@ -24,6 +24,7 @@ public class LobbyMenu extends SimpleMenu {
     @Override
     public ItemStack[] getContent() {
         ItemStack[][] content = getPageType().getBlank2DArray();
+        content[1][1] = teams;
         content[1][4] = start;
         content[1][7] = config;
         return getPageType().flatten(content);
@@ -38,6 +39,9 @@ public class LobbyMenu extends SimpleMenu {
     public void onClick(MenuView view, ClickType clickType, int slot, ItemStack itemStack) {
         if (itemStack.getType() != Material.AIR){
             switch (slot){
+                case OFFSET+1:
+                    new DisplayTeamMenu().open(view.getPlayer(), 0);
+                    break;
                 case OFFSET+4:
                     if (GameManager.getInstance().startGame(view.getPlayer())){
                         view.close();
