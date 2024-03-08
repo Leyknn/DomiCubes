@@ -20,6 +20,15 @@ public class DomicubesPlayer {
     private List<DomicubesEffect> permanentEffect;
     private List<DomicubesEffect> temporaryEffect;
 
+    public DomicubesPlayer(Player player, Team team){
+        this.player=player;
+        this.team = team;
+        this.basePlayerStats = null;
+        this.playerStats=null;
+        this.permanentEffect = new ArrayList<>();
+        this.temporaryEffect = new ArrayList<>();
+    }
+
     public DomicubesPlayer(Player player, PlayerStats playerStats){
         this.player=player;
         this.basePlayerStats = new PlayerStats(playerStats);

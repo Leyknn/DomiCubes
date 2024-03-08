@@ -1,5 +1,6 @@
 package me.khagana.domicubes;
 
+import lombok.Getter;
 import me.khagana.domicubes.controlpoint.ControlPoint;
 import me.khagana.domicubes.instanciable.Color;
 import me.khagana.domicubes.instanciable.DomicubesPlayer;
@@ -13,12 +14,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
+    @Getter
+    private static JavaPlugin instance;
     @Override
     public void onEnable() {
         this.getServer().getPluginManager().registerEvents(new TeamMenuListener(), this);
         this.getServer().getPluginManager().registerEvents(new NewTeamListener(), this);
+        this.getServer().getPluginManager().registerEvents(new NewControlPointListener(), this);
         this.getServer().getPluginManager().registerEvents(new HeadManger(), this);
-        GameManager.getInstance().setPlugin(this);
+        instance = this;
     }
 
     @Override

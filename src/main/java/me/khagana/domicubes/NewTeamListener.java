@@ -20,10 +20,7 @@ public class NewTeamListener implements Listener {
         if (!e.isCancelled() && DisplayTeamMenu.isCreatingTeam() && e.getBlockPlaced().getState() instanceof Banner){
             Location loc = e.getBlock().getLocation();
             BannerMeta meta = (BannerMeta) e.getItemInHand().getItemMeta();
-            PlayerInventory inv = e.getPlayer().getInventory();
-            inv.setItem(inv.getHeldItemSlot(),new ItemStack(Material.AIR));
-            e.setCancelled(true);
-            DisplayTeamMenu.getTeams().add(new TempTeam(loc, meta.getLore().get(0), Color.getColorByDyeColor(meta.getBaseColor())));
+            GameManager.getInstance().getTempsTeams().add(new TempTeam(loc, meta.getLore().get(0), Color.getColorByDyeColor(meta.getBaseColor())));
             DisplayTeamMenu.setCreatingTeam(false);
         }
     }

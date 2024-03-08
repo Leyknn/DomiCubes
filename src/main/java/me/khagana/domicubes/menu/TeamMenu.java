@@ -3,6 +3,7 @@ package me.khagana.domicubes.menu;
 import fr.dwightstudio.dsmapi.MenuView;
 import fr.dwightstudio.dsmapi.SimpleMenu;
 import fr.dwightstudio.dsmapi.pages.PageType;
+import me.khagana.domicubes.GameManager;
 import me.khagana.domicubes.HeadManger;
 import me.khagana.domicubes.ItemBuilder;
 import me.khagana.domicubes.instanciable.Team;
@@ -80,7 +81,7 @@ public class TeamMenu extends SimpleMenu {
                 case JOIN_OFFSET:
                     if (team.getPlayers().size() < Team.getMAX_PLAYER()) {
                         if (!team.getPlayers().contains(view.getPlayer())) {
-                            for (TempTeam tempTeam : DisplayTeamMenu.getTeams()) {
+                            for (TempTeam tempTeam : GameManager.getInstance().getTempsTeams()) {
                                 tempTeam.getPlayers().remove(view.getPlayer());
                             }
                             team.getPlayers().add(view.getPlayer());

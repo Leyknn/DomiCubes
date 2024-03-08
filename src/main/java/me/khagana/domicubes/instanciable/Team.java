@@ -3,9 +3,11 @@ package me.khagana.domicubes.instanciable;
 import lombok.Getter;
 import lombok.Setter;
 import me.khagana.domicubes.GameManager;
+import me.khagana.domicubes.GameScript;
 import me.khagana.domicubes.menu.DisplayTeamMenu;
 import me.khagana.domicubes.menu.TempTeam;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -31,14 +33,21 @@ public class Team {
         this.name = tTeam.getName();
         this.players = tTeam.getPlayers();
         for (Player p : players){
-            GameManager.getInstance().getPlayersMap().put(p, new DomicubesPlayer(p,null));
+            GameManager.getInstance().getPlayersMap().put(p, new DomicubesPlayer(p, this));
         }
         this.VP=0;
         this.base = tTeam.getLoc();
-        DisplayTeamMenu.getTeams().remove(tTeam);
+        GameManager.getInstance().getTempsTeams().remove(tTeam);
     }
 
     public void addVictoryPoint(int vp){
         this.VP+=vp;
+        if (VP>= GameManager.getInstance().getConfig().getVPtoWin().getCurrent().getNumber()){
+            GameScript.getInstance().setHasGameEnded(true);
+        }
+    }
+
+    public void deleteBanner(){
+        base.getBlock().setType(Material.AIR);
     }
 }

@@ -15,9 +15,9 @@ public class TeamMenuListener implements Listener {
     @EventHandler
     public void TeamMenuEvent(PlayerInteractEvent e){
         if (e.getItem().getType() == Material.CHEST){
-            if (DisplayTeamMenu.getTeams().isEmpty()){
-                DisplayTeamMenu.getTeams().add(new TempTeam(e.getPlayer().getLocation(), "T1", Color.BLUE));
-                DisplayTeamMenu.getTeams().add(new TempTeam(e.getPlayer().getLocation().add(10, 5, 10), "T2", Color.RED));
+            if (GameManager.getInstance().getTempsTeams().isEmpty()){
+                GameManager.getInstance().getTempsTeams().add(new TempTeam(e.getPlayer().getLocation(), "T1", Color.BLUE));
+                GameManager.getInstance().getTempsTeams().add(new TempTeam(e.getPlayer().getLocation().add(10, 5, 10), "T2", Color.RED));
             }
             if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 new LobbyMenu().open(e.getPlayer(), 0);

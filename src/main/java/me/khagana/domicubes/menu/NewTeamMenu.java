@@ -5,6 +5,7 @@ import fr.dwightstudio.dsmapi.SimpleMenu;
 import fr.dwightstudio.dsmapi.pages.PageType;
 import me.khagana.domicubes.GameManager;
 import me.khagana.domicubes.ItemBuilder;
+import me.khagana.domicubes.Main;
 import me.khagana.domicubes.instanciable.Color;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.ChatColor;
@@ -75,14 +76,14 @@ public class NewTeamMenu extends SimpleMenu {
                     }
                 })
                 .text("Choose a team name")
-                .plugin(GameManager.getInstance().getPlugin())
+                .plugin(Main.getInstance())
                 .open(view.getPlayer());
     }
 
     private static boolean validTeamName(String teamName){
         if (teamName.contains("§") || teamName.contains("&") || teamName.contains("\\")) {
             return false;
-        } else if (DisplayTeamMenu.getTeams().stream().map(
+        } else if (GameManager.getInstance().getTempsTeams().stream().map(
                 TempTeam::getName
         ).collect(Collectors.toList()).contains(teamName)) {
             return false;
@@ -93,7 +94,7 @@ public class NewTeamMenu extends SimpleMenu {
     private static boolean validColor(Color color){
         if (color==Color.NEUTRAL){
             return false;
-        } else if (DisplayTeamMenu.getTeams().stream().map(
+        } else if (GameManager.getInstance().getTempsTeams().stream().map(
                 TempTeam::getColor
         ).collect(Collectors.toList()).contains(color)) {
             return false;

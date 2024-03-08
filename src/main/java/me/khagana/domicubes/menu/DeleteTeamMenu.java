@@ -3,6 +3,7 @@ package me.khagana.domicubes.menu;
 import fr.dwightstudio.dsmapi.MenuView;
 import fr.dwightstudio.dsmapi.SimpleMenu;
 import fr.dwightstudio.dsmapi.pages.PageType;
+import me.khagana.domicubes.GameManager;
 import me.khagana.domicubes.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -45,7 +46,7 @@ public class DeleteTeamMenu extends SimpleMenu {
         if (itemStack != null) {
             switch (slot) {
                 case 1:
-                    DisplayTeamMenu.getTeams().remove(team);
+                    GameManager.getInstance().getTempsTeams().remove(team);
                     new DisplayTeamMenu().open(view.getPlayer(), 0);
                     break;
                 case 3:

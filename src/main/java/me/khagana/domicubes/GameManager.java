@@ -10,9 +10,11 @@ import me.khagana.domicubes.menu.TempTeam;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
+import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,6 +22,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static java.util.stream.Collectors.groupingBy;
 
 @Getter
 public class GameManager {
@@ -35,18 +39,19 @@ public class GameManager {
 
     private Map<Player, DomicubesPlayer> playersMap;
     private Map<Chunk, Set<ControlPoint>> chunkControlPointMap;
-    private Set<ControlPoint> controlPointList;
+    private List<ControlPoint> controlPointList;
     private List<Team> teamList;
-    @Setter private Plugin plugin;
+    private List<TempTeam> tempsTeams;
     private Status status;
     private GameConfig config;
 
 
     private GameManager (){
         this.playersMap =new HashMap<>();
-        this.controlPointList = new HashSet<>();
+        this.controlPointList = new ArrayList<>();
         this.chunkControlPointMap = new HashMap<>();
         this.teamList = new ArrayList<>();
+        this.tempsTeams = new ArrayList<>();
         status = Status.lobby;
         this.config = new GameConfig();
     }
@@ -65,17 +70,21 @@ public class GameManager {
         if (status==Status.lobby) {
             if (validTeam(sender)) {
                 createTeam(sender);
-                for (Team t : teamList) {
-                    sender.sendMessage(t.getName());
-                }
             } else {
                 return false;
+            }
+            for (ControlPoint cp : controlPointList){
+                cp.deleteBeacon();
+            }
+            for (Team t : teamList){
+                t.deleteBanner();
             }
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.teleport(playersMap.get(p).getTeam().getBase());
             }
             ControlPoint.setCaptureRate(config.getCaptureRate().getCurrent().getNumber());
             ControlPoint.setVPPerSecond(config.getVPperSec().getCurrent().getNumber());
+            GameScript.getInstance().runTaskTimer(Main.getInstance(), 0, 20);
             status=Status.in_game;
             return true;
         } else {
@@ -84,10 +93,47 @@ public class GameManager {
         }
     }
 
-    public void endGame(){}
+    public void endGame(){
+        List<Team> winners = getWinners();
+        if (winners.size()==1) {
+            Team winningTeam = winners.get(0);
+            GameScript.getInstance().cancel();
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.setGameMode(GameMode.SURVIVAL);
+                p.teleport(Main.getInstance().getServer().getWorlds().get(0).getSpawnLocation());
+                p.sendTitle(getWinTitle(winningTeam), getWinSubTitle(winningTeam));
+            }
+            new GameManager();
+            Bukkit.getScheduler().cancelAllTasks();
+        }
+    }
+
+    public String getWinTitle(Team winners){
+        return ChatColor.RED + winners.getName() + " wins the game !";
+    }
+
+    public String getWinSubTitle(Team winners){
+        StringBuilder playersList = new StringBuilder();
+        String separator = "";
+        for (Player p : winners.getPlayers()) {
+            playersList.append(separator).append(p.getDisplayName());
+            separator = ",";
+        }
+        return ChatColor.RED + "" + ChatColor.ITALIC + "Congrats to " + playersList + "!";
+    }
+
+    public List<Team> getWinners(){
+        return teamList.stream()
+                .collect(groupingBy(Team::getVP))
+                .entrySet()
+                .stream()
+                .max(Comparator.comparing(Map.Entry::getKey))
+                .get()
+                .getValue();
+    }
 
     public boolean validTeam(CommandSender sender){
-        if (DisplayTeamMenu.getTeams().stream().map(tempTeam -> tempTeam.getPlayers().stream().map(Player::getDisplayName).collect(Collectors.toSet())).flatMap(Set::stream).collect(Collectors.toSet()).equals(Bukkit.getOnlinePlayers().stream().map(Player::getDisplayName).collect(Collectors.toSet())))
+        if (tempsTeams.stream().map(tempTeam -> tempTeam.getPlayers().stream().map(Player::getDisplayName).collect(Collectors.toSet())).flatMap(Set::stream).collect(Collectors.toSet()).equals(Bukkit.getOnlinePlayers().stream().map(Player::getDisplayName).collect(Collectors.toSet())))
         {
             return true;
         }
@@ -97,7 +143,7 @@ public class GameManager {
 
     public void createTeam(CommandSender sender){
 
-        for (TempTeam tTeam : DisplayTeamMenu.getTeams()){
+        for (TempTeam tTeam : tempsTeams){
             if (tTeam.isValid()) {
                 GameManager.getInstance().teamList.add(new Team(tTeam));
             }
